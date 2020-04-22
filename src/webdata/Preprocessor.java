@@ -8,9 +8,10 @@ import java.util.ArrayList;
 
 public class Preprocessor {
     public static final String DOC_PREFIX = "product/productId:";
+    public static final String SCORE_PREFIX = "review/score:";
+
 
     private String cleanString(String str){
-//      TODO remove the .0 in 5.0 (e.g) in score feature
         str = str.replaceAll("\\W", " ");
         str = str.toLowerCase();
         return str;
@@ -29,18 +30,20 @@ public class Preprocessor {
         String line;
         String review = "";
         while ((line = br.readLine()) != null) {
+//          make the score an integer string instead of float
+            if (line.startsWith(SCORE_PREFIX)){
+                line = line.replace(".0", "");
+            }
             if (line.startsWith(DOC_PREFIX) & !review.equals("")) {
                 review = cleanString(review);
                 stringDocs.add(review);
+                review = line;
             }
             else{
-                review += line;
+                review += " " + line;
             }
         }
         return stringDocs;
-
-
-//
 
     }
 
