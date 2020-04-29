@@ -1,14 +1,14 @@
-package webdata.myObjects;
+package webdata.Table;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class concatenatedString {
+public class ConcatenatedStringOLD {
     private String concatString;
     private Boolean KinKFC;
     private ArrayList<String> terms;
 
-    concatenatedString(Integer k){
+    ConcatenatedStringOLD(Integer k){
         this.terms = new ArrayList<>();
         this.concatString = "";
         this.KinKFC = k != null;

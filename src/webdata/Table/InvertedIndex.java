@@ -1,4 +1,4 @@
-package webdata.myObjects;
+package webdata.Table;
 
 public class InvertedIndex {
 }

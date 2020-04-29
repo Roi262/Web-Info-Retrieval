@@ -1,4 +1,6 @@
 package webdata;
+import webdata.Table.FCTable;
+
 import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -43,6 +45,10 @@ public class SlowIndexWriter {
         String dir = "Data Index/";
         Preprocessor proc = new Preprocessor();
         ArrayList<String> stringDocs = proc.preprocess(inputFilePath);
+        FCTable table = new FCTable();
+        table.create();
+        Serializer.serializeToDisk();
+
         SlowIndexWriter writer = new SlowIndexWriter();
 //        writer.slowWrite(inputFilePath, dir);
 
