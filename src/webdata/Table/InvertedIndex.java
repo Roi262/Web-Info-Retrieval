@@ -9,15 +9,14 @@ import java.util.Collections;
 public class InvertedIndex {
     private String term;
     private ArrayList<Integer> postingList; // a list of document IDs
-    private ArrayList<String> compressedPostingList;
-    private
+    private String deltaCompressedPL;
 
     public InvertedIndex(ArrayList<Integer> postingList) {
         this.postingList = postingList;
     }
 
-    public ArrayList<Integer> getPostingList() {
-        return postingList;
+    public String getDeltaCompressedPL() {
+        return deltaCompressedPL;
     }
 
     public void create(){
@@ -43,8 +42,11 @@ public class InvertedIndex {
      * compresses posting List
      */
     private void compressList(){
-
-
+        StringBuilder str = new StringBuilder();
+        for (Integer integer : postingList) {
+            str.append(deltaEncode(integer));
+        }
+        this.deltaCompressedPL = str.toString();
     }
 
     private String deltaEncode(Integer num){
