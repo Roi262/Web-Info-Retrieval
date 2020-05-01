@@ -39,7 +39,7 @@ public class FCRow {
         int freq = getFreq();
         InvertedIndex = new InvertedIndex();
         updateLength();
-        updatePrefix(previousTerm, term, isKth);
+        updatePrefix();
         Integer termPtr = updateAndRetrieveTermPtr(ind);
         this.cropTerm();
         addTermPtr();

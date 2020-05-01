@@ -16,6 +16,9 @@ public class Preprocessor {
     public static final String SUMMARY_PREFIX = "review/summary:";
     public static final String TEXT_PREFIX = "review/text:";
 
+    private int totalNumOfReviews;
+    private int totalNumOfTokens;
+
 
     private String cleanString(String str) {
         str = str.replaceAll("\\W", " ");
@@ -32,6 +35,7 @@ public class Preprocessor {
      * @throws Exception readline
      */
     public Map<String, ArrayList<String>> preprocess(String inputFilePath) throws Exception {
+//        TODO add all that is needed to the dictionaries!!!
         ArrayList<String> stringDocs = new ArrayList<>();
         ArrayList<String> terms = new ArrayList<>();
         File dataFile = new File(inputFilePath);
@@ -63,9 +67,9 @@ public class Preprocessor {
     }
 
 //preprocess the terms of the reviews saves them as a sorted list of all the text in all the reviews
-    public ArrayList<String> preprocessText(){
-
-    }
+//    public ArrayList<String> preprocessText(){
+//
+//    }
 
     /**
      *
@@ -75,9 +79,7 @@ public class Preprocessor {
      */
     private List<String> getText(String line, String prefix){
         String text = line.replace(prefix, "");
-        List<String> terms = Arrays.asList(text.split(" "));
-//        java.util.Collections.sort(terms);
-        return terms;
+        return Arrays.asList(text.split(" "));
     }
 
     private Boolean unnecessaryValue(String line) {

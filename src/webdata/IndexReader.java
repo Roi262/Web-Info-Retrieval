@@ -80,7 +80,6 @@ public class IndexReader {
     /**
      * Return the ids of the reviews for a given product identifier
      * Note that the integers returned should be sorted by id
-     * <p>
      * Returns an empty Enumeration if there are no reviews for this product
      */
     public Enumeration<Integer> getProductReviews(String productId) {
