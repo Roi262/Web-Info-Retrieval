@@ -9,7 +9,7 @@ public class FeaturesDict {
     public FeaturesDict() {
     }
 
-    protected void add(String reviewID, String productID, Integer score,
+    public void add(String reviewID, String productID, Integer score,
                        Integer helpNumerator, Integer helpDenominator, Integer reviewLen) {
         FeaturesObject featuresObject = new FeaturesObject(
                 productID, score, helpNumerator, helpDenominator, reviewLen);

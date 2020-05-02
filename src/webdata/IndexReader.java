@@ -54,11 +54,11 @@ public class IndexReader {
     }
 
     /**
+     * The Posting List
      * Return a series of integers of the form id-1, freq-1, id-2, freq-2, ... such
      * that id-n is the n-th review containing the given token and freq-n is the
      * number of times that the token appears in review id-n
      * Note that the integers should be sorted by id
-     * <p>
      * Returns an empty Enumeration if there are no reviews containing this token
      */
     public Enumeration<Integer> getReviewsWithToken(String token) {

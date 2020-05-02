@@ -2,7 +2,7 @@ package webdata;
 
 import webdata.Objects.FeaturesDict;
 import webdata.Objects.ProductDict;
-import webdata.Objects.TokensDict;
+import webdata.Table.FCTable;
 
 /**
  * Class to serialize and write objects to Disk memory
@@ -30,7 +30,7 @@ public class Serializer {
     }
 
 
-    public serializeTermsDict(TokensDict dict){
+    public serializeTermsDict(FCTable dict){
 
     }
 }

@@ -19,6 +19,12 @@ public class FCTable {
         this.concatStr = new ConcatenatedString();
     }
 
+//    public FCTable createAndGetTokensDict(){
+//
+//        create();
+//
+//    }
+
     private void create() {
 //        TODO dont forget to deal with endcases
         for (int i = 0; i < this.sortedTerms.size(); i++) {
@@ -31,6 +37,7 @@ public class FCTable {
             this.concatStr.update(croppedTerm);
             this.dictionary.add(row);
         }
+
     }
 
 //  TODO should this be here?
