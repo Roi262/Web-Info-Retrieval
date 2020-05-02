@@ -2,9 +2,13 @@ package webdata;
 
 import webdata.Objects.FeaturesDict;
 import webdata.Objects.FeaturesObject;
+import webdata.Objects.TermsObject;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 public class PreProcessor {
@@ -24,7 +28,9 @@ public class PreProcessor {
     private BufferedReader reader;
     private File dataFile;
     private FeaturesDict featuresDict;
-//    private currFeatureObj currFeatureObj;
+    private Map<String, TermsObject> tokensDict;
+
+    //    private currFeatureObj currFeatureObj;
     private int totalNumOfReviews;
     private int totalNumOfTokens;
 
@@ -70,10 +76,32 @@ public class PreProcessor {
 
     private void handleText(String line){
         line = line.replace(TEXT_PREFIX, "");
+        line = cleanString(line);
+        ArrayList<String> tokens= new ArrayList<>(getText(line));
+        for(String token : tokens){
+
+        }
+
 
 
 
     }
+
+    /**
+     * @param line a cleaned text line
+     * @param prefix
+     * @return sorted list of all terms
+     */
+    private List<String> getText(String line){
+        return Arrays.asList(line.split(" "));
+    }
+
+    public static String cleanString(String str) {
+        str = str.replaceAll("\\W", " ");
+        str = str.toLowerCase();
+        return str;
+    }
+
 
     private Integer handleScore(String line) {
         line = line.replace(SCORE_PREFIX, "");
@@ -112,9 +140,5 @@ public class PreProcessor {
     }
 
 
-    public static String cleanString(String str) {
-        str = str.replaceAll("\\W", " ");
-        str = str.toLowerCase();
-        return str;
-    }
+
 }
