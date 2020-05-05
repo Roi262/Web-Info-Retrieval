@@ -1,5 +1,7 @@
 package webdata.Table;
 
+import webdata.Objects.TermsObject;
+
 import java.util.PrimitiveIterator;
 
 public class FCRow {
@@ -9,6 +11,7 @@ public class FCRow {
     private Integer prefixSize;
     private Integer termPtr;
     private int ind;
+    private int k;
     private boolean isKth;
     private String term;
     private String previousTerm;
@@ -28,16 +31,17 @@ public class FCRow {
      * @param term         complete string of current term
      * @param previousTerm complete string of previous term
      */
-    public FCRow(int ind, boolean isKth, String term, String previousTerm) {
+    public FCRow(int ind, boolean isKth, int k, String term, TermsObject termsObject, String previousTerm) {
         this.ind = ind;
         this.isKth = isKth;
         this.term = term;
         this.previousTerm = previousTerm;
+        this.freq = termsObject.getFreq();
+//        TODO merge inverted index and termsObject object
+        this.invertedIndex = new InvertedIndex(termsObject.getPostingList(), termsObject.getInKReviews());
     }
 
     public void create() {
-        int freq = getFreq();
-        InvertedIndex = new InvertedIndex();
         updateLength();
         updatePrefix();
         Integer termPtr = updateAndRetrieveTermPtr(ind);
@@ -66,8 +70,9 @@ public class FCRow {
      * @return the matching prefix term has with previous term
      */
     private void updatePrefix() {
-        if (isKth) {
+        if (isKth | previousTerm == null) {
             this.prefixSize = null;
+            return;
         }
         int i = 0;
         do {

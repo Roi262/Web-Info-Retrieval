@@ -41,10 +41,11 @@ public class SlowIndexWriter {
         System.out.println("Starting Slow Index Writer");
         String inputFilePath = "Small Datasets/100.txt";
         String dir = "Data Index/";
+        int k = 4; // the front coding factor TODO play around with
         PreProcessor proc = new PreProcessor(inputFilePath);
         proc.preProcess();
 
-        FCTable table = new FCTable(proc.getTokensDict());
+        FCTable table = new FCTable(proc.getTokensDict(), k);
         table.create();
         Serializer.serializeToDisk();
 
