@@ -5,10 +5,7 @@ import webdata.Objects.FeaturesObject;
 import webdata.Objects.TermsObject;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class PreProcessor {
@@ -40,23 +37,22 @@ public class PreProcessor {
         this.stringDocs = new ArrayList<>();
         this.reader = new BufferedReader(new FileReader(dataFile));
         this.featuresDict = new FeaturesDict();
+        this.tokensDict = new HashMap<>();
     }
 
     public void preProcess() throws IOException {
         String line;
-        String productID, reviewID;
+        String productID;
         Integer score, helpNumerator, helpDenominator, reviewLen;
-        while ((line = reader.readLine()) != null){
+        Integer reviewID = 0;
+        while ((line = reader.readLine()) != null) {
             if (unnecessaryValue(line)) {
                 continue;
             }
-            if (line.startsWith(PROD_ID_PREFIX){
+            if (line.startsWith(PROD_ID_PREFIX)) {
                 productID = handleProductID(line);
             }
-            if (line.startsWith(REVIEW_ID_PREFIX)){
-                reviewID = handleReviewID(line);
-            }
-            if (line.startsWith(HELP_PREFIX)){
+            if (line.startsWith(HELP_PREFIX)) {
                 Integer[] help = handleHelpfulness(line);
                 helpNumerator = help[NUMERATOR];
                 helpDenominator = help[DENOMINATOR];
@@ -65,34 +61,55 @@ public class PreProcessor {
             if (line.startsWith(SCORE_PREFIX)) {
                 score = handleScore(line);
             }
-            if (line.startsWith(TEXT_PREFIX)){
-                handleText(line);
-            }
-            else{ // i.e., end of review
+            if (line.startsWith(TEXT_PREFIX)) {
+                reviewLen = handleText(line, reviewID);
+            } else { // i.e., end of review TODO check in debug
                 featuresDict.add(reviewID, productID, score, helpNumerator, helpDenominator, reviewLen);
+                reviewID++;
             }
         }
-    }
-
-    private void handleText(String line){
-        line = line.replace(TEXT_PREFIX, "");
-        line = cleanString(line);
-        ArrayList<String> tokens= new ArrayList<>(getText(line));
-        for(String token : tokens){
-
-        }
-
-
-
-
     }
 
     /**
-     * @param line a cleaned text line
+     * function to update Map<String, TermsObject> tokensDict
+     * example of an element: <term: TermObject>
+     * So for each token in tokens
+     * First - create TermObject
+     * Second - update tokensDict dictionary
+     *
+     * note that this function iterates over the text twice - bad effect on runtime!!
+     * TODO if there is time try to minimize
+     * @param line a line of the text of the review
+     * @return
+     */
+    private Integer handleText(String line, Integer reviewID) {
+        line = line.replace(TEXT_PREFIX, "");
+        line = cleanString(line);
+
+        ArrayList<String> tokens = new ArrayList<>(getText(line));
+        Map<String, Integer> tokensCount = new HashMap<>();
+
+
+        for (String token : tokens) {
+            Integer count = tokensCount.getOrDefault(token, 0);
+            tokensCount.put(token, count + 1);
+        }
+
+        for (Map.Entry<String, Integer> entry : tokensCount.entrySet()) {
+            String token = entry.getKey();
+            TermsObject termsObject = tokensDict.getOrDefault(token, new TermsObject());
+            termsObject.update(entry.getValue(), reviewID);
+        }
+
+        return tokens.size();
+    }
+
+    /**
+     * @param line   a cleaned text line
      * @param prefix
      * @return sorted list of all terms
      */
-    private List<String> getText(String line){
+    private List<String> getText(String line) {
         return Arrays.asList(line.split(" "));
     }
 
@@ -110,7 +127,6 @@ public class PreProcessor {
     }
 
     /**
-     *
      * @param line
      * @return helpfullness values
      */
@@ -124,9 +140,8 @@ public class PreProcessor {
     }
 
     private String handleReviewID(String line) {
-        String reviewID = line.replace(REVIEW_ID_PREFIX, "");
 
-        return reviewID;
+        return line.replace(REVIEW_ID_PREFIX, "");
     }
 
     private String handleProductID(String line) {
@@ -136,9 +151,7 @@ public class PreProcessor {
 
     private Boolean unnecessaryValue(String line) {
         return line.startsWith(PROFILE_NAME_PREFIX) | line.startsWith(TIME_PREFIX) |
-                line.startsWith(SUMMARY_PREFIX);
+                line.startsWith(SUMMARY_PREFIX) | line.startsWith(REVIEW_ID_PREFIX);
     }
-
-
 
 }
