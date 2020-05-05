@@ -9,6 +9,9 @@ import java.util.*;
 
 
 public class PreProcessor {
+
+/***************Constants***************/
+
     public static final String PROD_ID_PREFIX = "product/productId: ";
     public static final String REVIEW_ID_PREFIX = "review/userId: ";
     public static final String PROFILE_NAME_PREFIX = "review/profileName: ";
@@ -19,6 +22,8 @@ public class PreProcessor {
     public static final String TEXT_PREFIX = "review/text: ";
     public static final int NUMERATOR = 0;
     public static final int DENOMINATOR = 1;
+
+/******************************/
 
     private ArrayList<String> terms;
     private ArrayList<String> stringDocs;
@@ -31,6 +36,16 @@ public class PreProcessor {
     private int totalNumOfReviews;
     private int totalNumOfTokens;
 
+/***************GETTERS***************/
+    public FeaturesDict getFeaturesDict() {
+        return featuresDict;
+    }
+
+    public Map<String, TermsObject> getTokensDict() {
+        return tokensDict;
+    }
+/*********************************/
+
 
     public PreProcessor(String inputFilePath) throws FileNotFoundException {
         this.dataFile = new File(inputFilePath);
@@ -42,9 +57,13 @@ public class PreProcessor {
 
     public void preProcess() throws IOException {
         String line;
-        String productID;
-        Integer score, helpNumerator, helpDenominator, reviewLen;
+        String productID = null;
+        Integer score = null;
+        Integer helpNumerator = null;
+        Integer helpDenominator = null;
+        Integer reviewLen = null;
         Integer reviewID = 0;
+
         while ((line = reader.readLine()) != null) {
             if (unnecessaryValue(line)) {
                 continue;

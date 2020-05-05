@@ -41,9 +41,10 @@ public class SlowIndexWriter {
         System.out.println("Starting Slow Index Writer");
         String inputFilePath = "Small Datasets/100.txt";
         String dir = "Data Index/";
-        PreprocessorOLD proc = new PreprocessorOLD();
-        ArrayList<String> stringDocs = proc.preprocess(inputFilePath);
-        FCTable table = new FCTable();
+        PreProcessor proc = new PreProcessor(inputFilePath);
+        proc.preProcess();
+
+        FCTable table = new FCTable(proc.getTokensDict());
         table.create();
         Serializer.serializeToDisk();
 

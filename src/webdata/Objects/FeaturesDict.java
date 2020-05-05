@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class FeaturesDict {
-    private Map<String, FeaturesObject> dict;
+    private Map<Integer, FeaturesObject> dict;
 
     public FeaturesDict() {
     }
