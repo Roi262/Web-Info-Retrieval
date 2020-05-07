@@ -47,7 +47,7 @@ public class SlowIndexWriter {
 
         FCTable table = new FCTable(proc.getTokensDict(), k);
         table.create();
-        Serializer.serializeToDisk();
+//        Serializer.serializeToDisk();
 
         SlowIndexWriter writer = new SlowIndexWriter();
 //        writer.slowWrite(inputFilePath, dir);

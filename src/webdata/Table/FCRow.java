@@ -1,9 +1,5 @@
 package webdata.Table;
 
-import webdata.Objects.TermsObject;
-
-import java.util.PrimitiveIterator;
-
 public class FCRow {
     private int freq;
     private InvertedIndex invertedIndex;
@@ -13,8 +9,7 @@ public class FCRow {
     private int ind;
     private int k;
     private boolean isKth;
-    private String term;
-    private String previousTerm;
+    private String previousTerm, term;
     private String croppedTerm;
 
 
@@ -31,30 +26,30 @@ public class FCRow {
      * @param term         complete string of current term
      * @param previousTerm complete string of previous term
      */
-    public FCRow(int ind, boolean isKth, int k, String term, TermsObject termsObject, String previousTerm) {
+    public FCRow(int ind, boolean isKth, int k, String term, TermsObject termsObject, String previousTerm, int termPtr) {
         this.ind = ind;
         this.isKth = isKth;
         this.term = term;
         this.previousTerm = previousTerm;
         this.freq = termsObject.getFreq();
-//        TODO merge inverted index and termsObject object
+        this.termPtr = termPtr;
         this.invertedIndex = new InvertedIndex(termsObject.getPostingList(), termsObject.getInKReviews());
+        create();
     }
 
-    public void create() {
+    private void create() {
         updateLength();
         updatePrefix();
-        Integer termPtr = updateAndRetrieveTermPtr(ind);
         this.cropTerm();
-        addTermPtr();
     }
 
+
+    /**
+     * if the next term is a Kth term then length is null
+     */
     private void updateLength() {
-//        TODO fix, need k here
-//        if the next term is a Kth term then length is null
-        this.length = ind + 1 % this.k == 0 ? null : term.length();
+        this.length = ind + 1 % k == 0 ? null : term.length();
     }
-
 
     private void cropTerm() {
         if (prefixSize != null) {

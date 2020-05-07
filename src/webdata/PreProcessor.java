@@ -1,8 +1,7 @@
 package webdata;
 
 import webdata.Objects.FeaturesDict;
-import webdata.Objects.FeaturesObject;
-import webdata.Objects.TermsObject;
+import webdata.Table.TermsObject;
 
 import java.io.*;
 import java.util.*;

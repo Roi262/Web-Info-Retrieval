@@ -1,7 +1,5 @@
 package webdata.Table;
 
-import webdata.Objects.TermsObject;
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -16,24 +14,22 @@ public class FCTable {
     private int k;
     private int currTermPtr;
 
-    FCTable(Map<String, TermsObject> tokensDict, int k){
+    public FCTable(Map<String, TermsObject> tokensDict, int k){
         this.k = k;
         this.currTermPtr = 0;
         this.concatStr = new ConcatenatedString();
         this.sortedTokensDict = new TreeMap<>(tokensDict); // treeMap is naturally sorted
     }
 
-    private void create() {
+    public void create() {
 //        TODO dont forget to deal with endcases
         int i = 0;
         String previousTerm = null, term;
         // TreeMap is naturally sorted
         for (Map.Entry<String, TermsObject> entry : sortedTokensDict.entrySet()){
-//        for (int i = 0; i < this.sortedTerms.size(); i++) {
-            boolean isKth = i % this.k == 0;
             term = entry.getKey();
-            FCRow row = new FCRow(i, isKth, k, term, entry.getValue(), previousTerm);
-            row.create();
+            boolean isKth = i % this.k == 0;
+            FCRow row = new FCRow(i, isKth, k, term, entry.getValue(), previousTerm, currTermPtr);
             String croppedTerm = row.getCroppedTerm();
             this.concatStr.update(croppedTerm);
             this.dictionary.add(row);
@@ -42,7 +38,6 @@ public class FCTable {
         }
 
     }
-
 
 //  TODO should this be here?
     private Integer updateAndRetrieveTermPtr(int ind) {
