@@ -67,19 +67,19 @@ public class PreProcessor {
             if (unnecessaryValue(line)) {
                 continue;
             }
-            if (line.startsWith(PROD_ID_PREFIX)) {
+            else if (line.startsWith(PROD_ID_PREFIX)) {
                 productID = handleProductID(line);
             }
-            if (line.startsWith(HELP_PREFIX)) {
+            else if (line.startsWith(HELP_PREFIX)) {
                 Integer[] help = handleHelpfulness(line);
                 helpNumerator = help[NUMERATOR];
                 helpDenominator = help[DENOMINATOR];
             }
 //          make the score an integer string instead of float
-            if (line.startsWith(SCORE_PREFIX)) {
+            else if (line.startsWith(SCORE_PREFIX)) {
                 score = handleScore(line);
             }
-            if (line.startsWith(TEXT_PREFIX)) {
+            else if (line.startsWith(TEXT_PREFIX)) {
                 reviewLen = handleText(line, reviewID);
             } else { // i.e., end of review TODO check in debug
                 featuresDict.add(reviewID, productID, score, helpNumerator, helpDenominator, reviewLen);
@@ -110,6 +110,9 @@ public class PreProcessor {
 
         for (String token : tokens) {
             Integer count = tokensCount.getOrDefault(token, 0);
+            if (token == ""){
+                int k = 9;
+            }
             tokensCount.put(token, count + 1);
         }
 
@@ -117,6 +120,7 @@ public class PreProcessor {
             String token = entry.getKey();
             TermsObject termsObject = tokensDict.getOrDefault(token, new TermsObject());
             termsObject.update(entry.getValue(), reviewID);
+            tokensDict.put(token, termsObject);
         }
 
         return tokens.size();
@@ -124,11 +128,13 @@ public class PreProcessor {
 
     /**
      * @param line   a cleaned text line
-     * @param prefix
      * @return sorted list of all terms
      */
     private List<String> getText(String line) {
-        return Arrays.asList(line.split(" "));
+        List<String> tokens = Arrays.asList(line.split(" "));
+        tokens.
+        tokens.remove("");
+        return tokens;
     }
 
     public static String cleanString(String str) {

@@ -1,12 +1,14 @@
 package webdata.Objects;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class FeaturesDict {
     private Map<Integer, FeaturesObject> dict;
 
     public FeaturesDict() {
+        this.dict = new HashMap<>();
     }
 
     public void add(Integer reviewID, String productID, Integer score,

@@ -13,8 +13,8 @@ public class DeltaCompressor {
         return deltaCompressedPL;
     }
 
-    protected Integer deltaDecode(String num){
-    }
+//    protected Integer deltaDecode(String num){
+//    }
 
 
     /**

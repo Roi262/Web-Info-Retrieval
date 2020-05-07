@@ -44,7 +44,6 @@ public class SlowIndexWriter {
         int k = 4; // the front coding factor TODO play around with
         PreProcessor proc = new PreProcessor(inputFilePath);
         proc.preProcess();
-
         FCTable table = new FCTable(proc.getTokensDict(), k);
         table.create();
 //        Serializer.serializeToDisk();

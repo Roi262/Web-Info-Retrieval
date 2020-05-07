@@ -11,11 +11,15 @@ public class FCRow {
     private boolean isKth;
     private String previousTerm, term;
     private String croppedTerm;
-
+    private String compressedString;
 
     /***********GETTERS AND SETTERS**************/
     public String getCroppedTerm() {
         return croppedTerm;
+    }
+
+    public String getCompressedString() {
+        return compressedString;
     }
     /*************************/
 
@@ -34,6 +38,7 @@ public class FCRow {
         this.freq = termsObject.getFreq();
         this.termPtr = termPtr;
         this.invertedIndex = new InvertedIndex(termsObject.getPostingList(), termsObject.getInKReviews());
+        this.compressedString = invertedIndex.create();
         create();
     }
 
