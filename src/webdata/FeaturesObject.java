@@ -1,4 +1,4 @@
-package webdata.Objects;
+package webdata;
 
 public class FeaturesObject {
     private String productID;

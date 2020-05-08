@@ -1,4 +1,4 @@
-package webdata.Table;
+package webdata;
 
 import java.util.ArrayList;
 import java.util.HashSet;

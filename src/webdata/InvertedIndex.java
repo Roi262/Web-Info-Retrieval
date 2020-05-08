@@ -1,4 +1,4 @@
-package webdata.Table;
+package webdata;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,11 +19,9 @@ public class InvertedIndex {
     }
 
     public String create() {
-        DeltaCompressor dComp = new DeltaCompressor(); //TODO maybe get compressor as an argument
         sortPostingList();
         updatePostingListToGaps();
-        dComp.compressList(postingList);
-        return dComp.getDeltaCompressedPL();
+        return DeltaCompressor.compressList(postingList);
     }
 
     protected void sortPostingList() {

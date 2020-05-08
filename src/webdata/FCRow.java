@@ -1,4 +1,4 @@
-package webdata.Table;
+package webdata;
 
 public class FCRow {
     private int freq;

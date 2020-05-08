@@ -1,4 +1,4 @@
-package webdata.Table;
+package webdata;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -15,12 +15,12 @@ public class FCTable {
 
     /*****/
     TreeMap<String, TermsObject> sortedTokensDict;
-    private ArrayList<FCRow> dictionary;
+    private ArrayList<FCRow> table;
     private int k;
     private int currTermPtr;
 
     public FCTable(Map<String, TermsObject> tokensDict, int k) {
-        this.dictionary = new ArrayList<>();
+        this.table = new ArrayList<>();
         this.k = k;
         this.currTermPtr = 0;
         this.concatStrBuilder = new StringBuilder();
@@ -37,7 +37,7 @@ public class FCTable {
             FCRow row = new FCRow(i, isKth, k, term, entry.getValue(), previousTerm, currTermPtr);
             String croppedTerm = row.getCroppedTerm();
             this.concatStrBuilder.append(croppedTerm);
-            dictionary.add(row);
+            table.add(row);
             previousTerm = term;
             currTermPtr += croppedTerm.length();
             i++;

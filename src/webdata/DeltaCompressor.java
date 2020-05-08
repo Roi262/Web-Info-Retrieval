@@ -1,4 +1,4 @@
-package webdata.Table;
+package webdata;
 
 import java.util.ArrayList;
 
@@ -10,9 +10,9 @@ class DeltaCompressor {
     /**
      * compresses posting List
      */
-    static String compressList(ArrayList<Integer> postingList){
+    static String compressList(ArrayList<Integer> list){
         StringBuilder str = new StringBuilder();
-        for (Integer integer : postingList) {
+        for (Integer integer : list) {
             str.append(deltaEncode(integer));
         }
         return str.toString();

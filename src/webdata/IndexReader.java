@@ -1,5 +1,9 @@
 package webdata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Enumeration;
 
 public class IndexReader {
@@ -9,6 +13,7 @@ public class IndexReader {
      * Returns null if there is no review with the given identifier
      */
     public String getProductId(int reviewId) {
+
 
     }
 
@@ -83,5 +88,12 @@ public class IndexReader {
      * Returns an empty Enumeration if there are no reviews for this product
      */
     public Enumeration<Integer> getProductReviews(String productId) {
+    }
+
+
+    public void recoverDictionaryRecordsFromFile() throws IOException, ClassNotFoundException {
+        FileInputStream fi = new FileInputStream(new File(_dictionaryRecordsFilePath));
+        ObjectInputStream oi = new ObjectInputStream(fi);
+        _blocksList = (ArrayList<IDictionaryBlock>)oi.readObject();
     }
 }
