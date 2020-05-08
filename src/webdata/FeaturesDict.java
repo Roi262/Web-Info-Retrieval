@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FeaturesDict {
-    //    private Map<Integer, FeaturesObject> dict;
-//    private Map<Integer, String> dict;
+    private static final int PRODUCT_ID = 0;
+    private static final int PRODUCT_ID = 0;
+    private static final int PRODUCT_ID = 0;
+    private static final int PRODUCT_ID = 0;
+    private static final int PRODUCT_ID = 0;
+
     private ArrayList<String> dict;
 
 
@@ -29,4 +33,11 @@ public class FeaturesDict {
                 new ArrayList<>(Arrays.asList(score, helpNumerator, helpDenominator, reviewLen)));
         dict.add(values);
     }
+
+    public String getProductID(int reviewID){
+        ArrayList<Integer> values = DeltaCompressor.decode(dict.get(reviewID));
+        return values.get(PRODUCT_ID);
+    }
+
+
 }

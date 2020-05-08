@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 public class IndexReader {
@@ -13,6 +14,9 @@ public class IndexReader {
      * Returns null if there is no review with the given identifier
      */
     public String getProductId(int reviewId) {
+        FeaturesDict featuresDict = recoverDict(dict_file);
+        return featuresDict.get
+
 
 
     }
