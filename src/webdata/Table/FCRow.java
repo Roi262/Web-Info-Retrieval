@@ -61,9 +61,9 @@ public class FCRow {
         if (prefixSize != null) {
             String prefix = term.substring(0, prefixSize);
             assert prefix.length() == prefixSize : "Cropping string at wrong index.";
-            this.croppedTerm = term.replace(prefix, "");
+            croppedTerm = term.replace(prefix, "");
         } else {
-            this.croppedTerm = term;
+            croppedTerm = term;
         }
     }
 
@@ -72,14 +72,11 @@ public class FCRow {
      */
     private void updatePrefix() {
         if (isKth | previousTerm == null) {
-            this.prefixSize = null;
+            prefixSize = null;
             return;
         }
         int i = 0;
-        do {
-            i++;
-        }
-        while (previousTerm.charAt(i) == term.charAt(i));
-        this.prefixSize = i;
+        while(i < previousTerm.length() && i < term.length() && (previousTerm.charAt(i) == term.charAt(i))) i++;
+        prefixSize = i;
     }
 }

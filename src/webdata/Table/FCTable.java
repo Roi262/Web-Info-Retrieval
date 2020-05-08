@@ -20,6 +20,7 @@ public class FCTable {
     private int currTermPtr;
 
     public FCTable(Map<String, TermsObject> tokensDict, int k) {
+        this.dictionary = new ArrayList<>();
         this.k = k;
         this.currTermPtr = 0;
         this.concatStrBuilder = new StringBuilder();
@@ -27,7 +28,6 @@ public class FCTable {
     }
 
     public void create() {
-//        TODO dont forget to deal with endcases
         int i = 0;
         String previousTerm = null, term;
         // TreeMap is naturally sorted
