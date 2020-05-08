@@ -34,6 +34,7 @@ public class FCRow {
         this.ind = ind;
         this.isKth = isKth;
         this.term = term;
+        this.k = k;
         this.previousTerm = previousTerm;
         this.freq = termsObject.getFreq();
         this.termPtr = termPtr;
@@ -53,7 +54,7 @@ public class FCRow {
      * if the next term is a Kth term then length is null
      */
     private void updateLength() {
-        this.length = ind + 1 % k == 0 ? null : term.length();
+        length = (ind + 1) % k == 0 ? null : term.length();
     }
 
     private void cropTerm() {

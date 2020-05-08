@@ -27,17 +27,13 @@ public class InvertedIndex {
     }
 
     protected void sortPostingList() {
-        Collections.sort(this.postingList);
+        Collections.sort(postingList);
     }
 
     protected void updatePostingListToGaps() {
-        ArrayList<Integer> gaps = new ArrayList<>(this.postingList.size());
-        gaps.set(0, this.postingList.get(0));
-        for (int i = 1; i < this.postingList.size(); i++) {
-            Integer diff = this.postingList.get(i) - this.postingList.get(i - 1);
-            gaps.set(i, diff);
+        for(int i = postingList.size()-1; i > 0; i--){
+            postingList.set(i, postingList.get(i) - postingList.get(i-1));
         }
-        this.postingList = gaps;
     }
 
 }

@@ -8,16 +8,21 @@ import java.util.TreeMap;
  * Class to create the blocked FC
  */
 public class FCTable {
+
+    /**concatenated string objects***/
+    private StringBuilder concatStrBuilder;
+    private String concatStr;
+
+    /*****/
     TreeMap<String, TermsObject> sortedTokensDict;
     private ArrayList<FCRow> dictionary;
-    private ConcatenatedString concatStr;
     private int k;
     private int currTermPtr;
 
     public FCTable(Map<String, TermsObject> tokensDict, int k) {
         this.k = k;
         this.currTermPtr = 0;
-        this.concatStr = new ConcatenatedString();
+        this.concatStrBuilder = new StringBuilder();
         this.sortedTokensDict = new TreeMap<>(tokensDict); // treeMap is naturally sorted
     }
 
@@ -31,11 +36,12 @@ public class FCTable {
             boolean isKth = i % k == 0;
             FCRow row = new FCRow(i, isKth, k, term, entry.getValue(), previousTerm, currTermPtr);
             String croppedTerm = row.getCroppedTerm();
-            concatStr.update(croppedTerm);
+            this.concatStrBuilder.append(croppedTerm);
             dictionary.add(row);
             previousTerm = term;
             currTermPtr += croppedTerm.length();
             i++;
         }
+        concatStr = concatStrBuilder.toString();
     }
 }

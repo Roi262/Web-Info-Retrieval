@@ -110,14 +110,14 @@ public class PreProcessor {
 
         for (String token : tokens) {
             Integer count = tokensCount.getOrDefault(token, 0);
-            if (token == ""){
-                int k = 9;
-            }
             tokensCount.put(token, count + 1);
         }
 
         for (Map.Entry<String, Integer> entry : tokensCount.entrySet()) {
             String token = entry.getKey();
+            if(token.equals("")){
+                continue;
+            }
             TermsObject termsObject = tokensDict.getOrDefault(token, new TermsObject());
             termsObject.update(entry.getValue(), reviewID);
             tokensDict.put(token, termsObject);
@@ -132,8 +132,6 @@ public class PreProcessor {
      */
     private List<String> getText(String line) {
         List<String> tokens = Arrays.asList(line.split(" "));
-        tokens.
-        tokens.remove("");
         return tokens;
     }
 
