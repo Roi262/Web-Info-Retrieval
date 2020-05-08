@@ -1,26 +1,28 @@
 package webdata.Objects;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Map;
+import java.util.*;
 
 
-//TODO THIS CLASS IS REDUNDANT
 public class ProductDict {
-    private int productID; //TODO maybe this is a string?
-//    private Enumeration<Integer> reviewsIDs;
-    private Map<Integer, ArrayList<Integer>> reviewsByProductIDDict;
-    private ArrayList<Integer> reviewsArr;
+    private Enumeration<Integer> reviewsIDs;
+
+    //    reviews by productID
+    private Map<String, TreeSet<Integer>> dict;
+
     public ProductDict() {
-        this.productID = productID;
+        this.dict = new HashMap<>();
     }
 
-    public void add(Integer reviewID){
-        reviewsArr.add(reviewID);
+    public void add(String prodID, Integer reviewID) {
+        TreeSet<Integer> reviews = dict.getOrDefault(prodID, new TreeSet<>());
+        reviews.add(reviewID);
+        dict.put(prodID, reviews);
     }
 
-    public Enumeration<Integer> getReviewsIDs() {
-        return Collections.enumeration(reviewsArr);
+    public getCompressedDict()
+
+
+    public Enumeration<Integer> getReviewsIDs(String prodID) {
+        return Collections.enumeration(dict.get(prodID));
     }
 }

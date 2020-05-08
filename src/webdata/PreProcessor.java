@@ -9,23 +9,15 @@ import java.util.*;
 
 public class PreProcessor {
 
-/***************Constants***************/
+    /***************Constants***************/
 
-    public static final String PROD_ID_PREFIX = "product/productId: ";
-    public static final String REVIEW_ID_PREFIX = "review/userId: ";
-    public static final String PROFILE_NAME_PREFIX = "review/profileName: ";
-    public static final String HELP_PREFIX = "review/helpfulness: ";
-    public static final String SCORE_PREFIX = "review/score: ";
-    public static final String TIME_PREFIX = "review/time: ";
-    public static final String SUMMARY_PREFIX = "review/summary: ";
-    public static final String TEXT_PREFIX = "review/text: ";
-    public static final int NUMERATOR = 0;
-    public static final int DENOMINATOR = 1;
+    public static final String PROD_ID_PREFIX = "product/productId: ", REVIEW_ID_PREFIX = "review/userId: ", PROFILE_NAME_PREFIX = "review/profileName: ", HELP_PREFIX = "review/helpfulness: ";
+    public static final String SCORE_PREFIX = "review/score: ", TIME_PREFIX = "review/time: ", SUMMARY_PREFIX = "review/summary: ", TEXT_PREFIX = "review/text: ";
+    public static final int NUMERATOR = 0, DENOMINATOR = 1;
 
-/******************************/
+    /******************************/
 
     private ArrayList<String> terms;
-    private ArrayList<String> stringDocs;
     private BufferedReader reader;
     private File dataFile;
     private FeaturesDict featuresDict;
@@ -35,20 +27,19 @@ public class PreProcessor {
     private int totalNumOfReviews;
     private int totalNumOfTokens;
 
-/***************GETTERS***************/
+    /***************GETTERS***************/
     public FeaturesDict getFeaturesDict() {
         return featuresDict;
     }
-
     public Map<String, TermsObject> getTokensDict() {
         return tokensDict;
     }
-/*********************************/
+
+    /*********************************/
 
 
     public PreProcessor(String inputFilePath) throws FileNotFoundException {
         this.dataFile = new File(inputFilePath);
-        this.stringDocs = new ArrayList<>();
         this.reader = new BufferedReader(new FileReader(dataFile));
         this.featuresDict = new FeaturesDict();
         this.tokensDict = new HashMap<>();
@@ -58,19 +49,16 @@ public class PreProcessor {
         String line;
         String productID = null;
         Integer score = null;
-        Integer helpNumerator = null;
-        Integer helpDenominator = null;
+        Integer helpNumerator = null, helpDenominator = null;
         Integer reviewLen = null;
         Integer reviewID = 0;
 
         while ((line = reader.readLine()) != null) {
             if (unnecessaryValue(line)) {
                 continue;
-            }
-            else if (line.startsWith(PROD_ID_PREFIX)) {
+            } else if (line.startsWith(PROD_ID_PREFIX)) {
                 productID = handleProductID(line);
-            }
-            else if (line.startsWith(HELP_PREFIX)) {
+            } else if (line.startsWith(HELP_PREFIX)) {
                 Integer[] help = handleHelpfulness(line);
                 helpNumerator = help[NUMERATOR];
                 helpDenominator = help[DENOMINATOR];
@@ -78,8 +66,7 @@ public class PreProcessor {
 //          make the score an integer string instead of float
             else if (line.startsWith(SCORE_PREFIX)) {
                 score = handleScore(line);
-            }
-            else if (line.startsWith(TEXT_PREFIX)) {
+            } else if (line.startsWith(TEXT_PREFIX)) {
                 reviewLen = handleText(line, reviewID);
             } else { // i.e., end of review TODO check in debug
                 featuresDict.add(reviewID, productID, score, helpNumerator, helpDenominator, reviewLen);
@@ -94,9 +81,10 @@ public class PreProcessor {
      * So for each token in tokens
      * First - create TermObject
      * Second - update tokensDict dictionary
-     *
+     * <p>
      * note that this function iterates over the text twice - bad effect on runtime!!
      * TODO if there is time try to minimize
+     *
      * @param line a line of the text of the review
      * @return
      */
@@ -104,18 +92,18 @@ public class PreProcessor {
         line = line.replace(TEXT_PREFIX, "");
         line = cleanString(line);
 
-        ArrayList<String> tokens = new ArrayList<>(getText(line));
+        ArrayList<String> lineTokens = new ArrayList<>(getText(line));
         Map<String, Integer> tokensCount = new HashMap<>();
 
 
-        for (String token : tokens) {
+        for (String token : lineTokens) {
             Integer count = tokensCount.getOrDefault(token, 0);
             tokensCount.put(token, count + 1);
         }
 
         for (Map.Entry<String, Integer> entry : tokensCount.entrySet()) {
             String token = entry.getKey();
-            if(token.equals("")){
+            if (token.equals("")) {
                 continue;
             }
             TermsObject termsObject = tokensDict.getOrDefault(token, new TermsObject());
@@ -123,11 +111,11 @@ public class PreProcessor {
             tokensDict.put(token, termsObject);
         }
 
-        return tokens.size();
+        return lineTokens.size();
     }
 
     /**
-     * @param line   a cleaned text line
+     * @param line a cleaned text line
      * @return sorted list of all terms
      */
     private List<String> getText(String line) {

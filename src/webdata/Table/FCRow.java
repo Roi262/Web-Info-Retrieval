@@ -6,7 +6,7 @@ public class FCRow {
     private Integer length;
     private Integer prefixSize;
     private Integer termPtr;
-    private int ind;
+    private int currInd;
     private int k;
     private boolean isKth;
     private String previousTerm, term;
@@ -31,7 +31,7 @@ public class FCRow {
      * @param previousTerm complete string of previous term
      */
     public FCRow(int ind, boolean isKth, int k, String term, TermsObject termsObject, String previousTerm, int termPtr) {
-        this.ind = ind;
+        this.currInd = ind;
         this.isKth = isKth;
         this.term = term;
         this.k = k;
@@ -54,7 +54,7 @@ public class FCRow {
      * if the next term is a Kth term then length is null
      */
     private void updateLength() {
-        length = (ind + 1) % k == 0 ? null : term.length();
+        length = (currInd + 1) % k == 0 ? null : term.length();
     }
 
     private void cropTerm() {
