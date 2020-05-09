@@ -3,13 +3,12 @@ package webdata;
 import java.io.*;
 import java.util.*;
 
+import static webdata.Constants.PrefixConstants.*;
 
 public class PreProcessor {
 
     /***************Constants***************/
 
-    public static final String PROD_ID_PREFIX = "product/productId: ", REVIEW_ID_PREFIX = "review/userId: ", PROFILE_NAME_PREFIX = "review/profileName: ", HELP_PREFIX = "review/helpfulness: ";
-    public static final String SCORE_PREFIX = "review/score: ", TIME_PREFIX = "review/time: ", SUMMARY_PREFIX = "review/summary: ", TEXT_PREFIX = "review/text: ";
     public static final int NUMERATOR = 0, DENOMINATOR = 1;
 
     /******************************/
@@ -17,12 +16,10 @@ public class PreProcessor {
     private ArrayList<String> terms;
     private BufferedReader reader;
     private File dataFile;
-    private FeaturesDict featuresDict;
     private Map<String, TermsObject> tokensDict;
 
-    //    private currFeatureObj currFeatureObj;
-    private int totalNumOfReviews;
-    private int totalNumOfTokens;
+    private FeaturesDict featuresDict;
+    private TotalCounts totalCounts;
 
     /***************GETTERS***************/
     public FeaturesDict getFeaturesDict() {
@@ -40,6 +37,7 @@ public class PreProcessor {
         this.reader = new BufferedReader(new FileReader(dataFile));
         this.featuresDict = new FeaturesDict();
         this.tokensDict = new HashMap<>();
+        this.totalCounts = new TotalCounts();
     }
 
     public void preProcess() throws IOException {
@@ -66,10 +64,12 @@ public class PreProcessor {
             } else if (line.startsWith(TEXT_PREFIX)) {
                 reviewLen = handleText(line, reviewID);
             } else { // i.e., end of review TODO check in debug
-                featuresDict.add(reviewID, productID, score, helpNumerator, helpDenominator, reviewLen);
+                featuresDict.add(productID, score, helpNumerator, helpDenominator, reviewLen);
                 reviewID++;
             }
         }
+        totalCounts.setTotalNumOfReviews(reviewID + 1);
+        totalCounts.setTotalNumOfTokens(tokensDict.size());
     }
 
     /**

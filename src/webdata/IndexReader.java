@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import static webdata.Constants.*;
+
 public class IndexReader {
 
     /**
@@ -15,10 +17,7 @@ public class IndexReader {
      */
     public String getProductId(int reviewId) {
         FeaturesDict featuresDict = recoverDict(dict_file);
-        return featuresDict.get
-
-
-
+        return featuresDict.getProductID(reviewId);
     }
 
     /**
@@ -26,18 +25,24 @@ public class IndexReader {
      * Returns -1 if there is no review with the given identifier
      */
     public int getReviewScore(int reviewId) {
+        FeaturesDict featuresDict = recoverDict(dict_file);
+        return featuresDict.getValue(reviewId, SCORE);
     }
 
     /**
      * Returns the numerator for the helpfulness of a given review * Returns -1 if there is no review with the given identifier
      */
     public int getReviewHelpfulnessNumerator(int reviewId) {
+        FeaturesDict featuresDict = recoverDict(dict_file);
+        return featuresDict.getValue(reviewId, HELP_N);
     }
 
     /**
      * Returns the denominator for the helpfulness of a given review * Returns -1 if there is no review with the given identifier
      */
     public int getReviewHelpfulnessDenominator(int reviewId) {
+        FeaturesDict featuresDict = recoverDict(dict_file);
+        return featuresDict.getValue(reviewId, HELP_D);
     }
 
     /**
@@ -45,6 +50,8 @@ public class IndexReader {
      * Returns -1 if there is no review with the given identifier
      */
     public int getReviewLength(int reviewId) {
+        FeaturesDict featuresDict = recoverDict(dict_file);
+        return featuresDict.getValue(reviewId, REVIEW_LEN);
     }
 
     /**
@@ -77,6 +84,8 @@ public class IndexReader {
      * Return the number of product reviews available in the system
      */
     public int getNumberOfReviews() {
+        TotalCounts tc = recover(totalCounts file);
+        return tc.getTotalNumOfReviews();
     }
 
     /**
@@ -84,6 +93,8 @@ public class IndexReader {
      * (Tokens should be counted as many times as they appear)
      */
     public int getTokenSizeOfReviews() {
+        TotalCounts tc = recover(totalCounts file);
+        return tc.getTotalNumOfTokens();
     }
 
     /**
@@ -92,6 +103,8 @@ public class IndexReader {
      * Returns an empty Enumeration if there are no reviews for this product
      */
     public Enumeration<Integer> getProductReviews(String productId) {
+        ProductDict pd = recover(product dict file);
+        return pd.getReviewsIDs(productId);
     }
 
 

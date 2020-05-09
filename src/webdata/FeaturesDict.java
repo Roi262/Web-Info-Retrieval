@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static webdata.Constants.*;
+//import static webdata.Constants.ReviewValues.*;
+
 public class FeaturesDict {
-    private static final int SCORE = 0;
-    private static final int HELP_N = 1;
-    private static final int HELP_D = 2;
-    private static final int REVIEW_LEN = 3;
-    private static final String SEPARATOR = "#";
+//    private static final int PROD_ID = 0, SCORE = 1, HELP_N = 2, HELP_D = 3, REVIEW_LEN = 4;
+//    private static final String SEPARATOR = "#";
 
     private ArrayList<String> dict;
 
@@ -41,7 +41,6 @@ public class FeaturesDict {
 
     public int getValue(int reviewID, int type){
         assert type == SCORE || type == HELP_D || type == HELP_N || type == REVIEW_LEN;
-
         String value = dict.get(reviewID);
         String binaryString = splitOnSeparator(value)[1];
         ArrayList<Integer> values = DeltaCompressor.deltaDecode(binaryString);
