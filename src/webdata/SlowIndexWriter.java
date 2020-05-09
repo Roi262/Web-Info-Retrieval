@@ -1,5 +1,7 @@
 package webdata;
 
+import webdata.WriteToDisk.Table.FCTable;
+
 public class SlowIndexWriter {
 
 

@@ -2,7 +2,7 @@ package webdata;
 
 import java.util.ArrayList;
 
-class DeltaCompressor {
+public class DeltaCompressor {
 
 //    protected Integer deltaDecode(String num){
 //    }
@@ -10,7 +10,7 @@ class DeltaCompressor {
     /**
      * compresses posting List
      */
-    static String compressList(ArrayList<Integer> list) {
+    public static String compressList(ArrayList<Integer> list) {
         StringBuilder str = new StringBuilder();
         for (Integer integer : list) {
             str.append(deltaEncode(integer));
@@ -18,7 +18,7 @@ class DeltaCompressor {
         return str.toString();
     }
 
-    static ArrayList<Integer> deltaDecode(String encoding) {
+    public static ArrayList<Integer> deltaDecode(String encoding) {
         ArrayList<Integer> decodedList = new ArrayList<>();
         while (encoding.length() > 0) {
             int firstLen = decodeUnary(encoding);

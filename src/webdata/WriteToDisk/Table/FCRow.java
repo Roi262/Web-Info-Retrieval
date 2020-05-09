@@ -1,4 +1,6 @@
-package webdata;
+package webdata.WriteToDisk.Table;
+
+import webdata.TermsObject;
 
 public class FCRow {
     private int freq;
@@ -20,6 +22,18 @@ public class FCRow {
 
     public String getCompressedString() {
         return compressedString;
+    }
+
+    public int getFreq() {
+        return freq;
+    }
+
+    public Integer getLength() {
+        return length;
+    }
+
+    public Integer getPrefixSize() {
+        return prefixSize;
     }
     /*************************/
 

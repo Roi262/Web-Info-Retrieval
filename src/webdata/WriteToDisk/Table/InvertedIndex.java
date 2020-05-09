@@ -1,4 +1,6 @@
-package webdata;
+package webdata.WriteToDisk.Table;
+
+import webdata.DeltaCompressor;
 
 import java.util.ArrayList;
 import java.util.Collections;

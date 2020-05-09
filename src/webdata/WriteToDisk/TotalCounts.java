@@ -1,4 +1,4 @@
-package webdata;
+package webdata.WriteToDisk;
 
 import java.io.Serializable;
 

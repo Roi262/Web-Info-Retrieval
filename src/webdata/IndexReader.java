@@ -1,5 +1,7 @@
 package webdata;
 
+import webdata.WriteToDisk.FeaturesDict;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -108,9 +110,4 @@ public class IndexReader {
     }
 
 
-    public void recoverDictionaryRecordsFromFile() throws IOException, ClassNotFoundException {
-        FileInputStream fi = new FileInputStream(new File(_dictionaryRecordsFilePath));
-        ObjectInputStream oi = new ObjectInputStream(fi);
-        _blocksList = (ArrayList<IDictionaryBlock>)oi.readObject();
-    }
 }

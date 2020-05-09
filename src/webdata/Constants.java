@@ -17,4 +17,9 @@ public class Constants {
         public static final String TEXT_PREFIX = "review/text: ";
     }
 
+    enum FCTableColumnValues {
+        FREQ
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package webdata;
 
 import java.io.*;
+import java.util.ArrayList;
 
 
 /**
@@ -23,6 +24,13 @@ public class Serializer {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+
+    public void recoverDictionaryRecordsFromFile() throws IOException, ClassNotFoundException {
+        FileInputStream fi = new FileInputStream(new File(_dictionaryRecordsFilePath));
+        ObjectInputStream oi = new ObjectInputStream(fi);
+        _blocksList = (ArrayList<IDictionaryBlock>)oi.readObject();
     }
 
 
