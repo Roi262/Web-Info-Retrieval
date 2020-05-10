@@ -1,17 +1,26 @@
 package webdata;
 
 import webdata.WriteToDisk.FeaturesDict;
+import webdata.WriteToDisk.Table.FCRow;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
 import static webdata.Constants.*;
 
 public class IndexReader {
+
+    private KinKDictReader kinKDictReader;
+
+    public IndexReader() {
+        initializeKinKDictReader();
+    }
+
+    private void initializeKinKDictReader(){
+        ArrayList<FCRow> table = recoverTable(tableFile);
+        String allTermString = recover(allTermStringFile);
+        this.kinKDictReader = new KinKDictReader(table, allTermString);
+    }
 
     /**
      * Returns the product identifier for the given review
@@ -61,6 +70,7 @@ public class IndexReader {
      * Returns 0 if there are no reviews containing this token
      */
     public int getTokenFrequency(String token) {
+        return kinKDictReader.getTokenFrequency(token);
     }
 
     /**
@@ -69,6 +79,7 @@ public class IndexReader {
      * Returns 0 if there are no reviews containing this token
      */
     public int getTokenCollectionFrequency(String token) {
+        return kinKDictReader.getTokenCollectionFrequency(token);
     }
 
     /**
@@ -80,6 +91,7 @@ public class IndexReader {
      * Returns an empty Enumeration if there are no reviews containing this token
      */
     public Enumeration<Integer> getReviewsWithToken(String token) {
+        return kinKDictReader.getReviewsWithToken(token);
     }
 
     /**
@@ -108,6 +120,4 @@ public class IndexReader {
         ProductDict pd = recover(product dict file);
         return pd.getReviewsIDs(productId);
     }
-
-
 }

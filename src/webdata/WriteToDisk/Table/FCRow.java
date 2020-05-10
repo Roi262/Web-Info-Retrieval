@@ -1,28 +1,26 @@
 package webdata.WriteToDisk.Table;
 
-import webdata.TermsObject;
+import webdata.PostingList;
+import static webdata.Constants.HyperParameters.k;
+
 
 public class FCRow {
+//    private InvertedIndex invertedIndex;
     private int freq;
-    private InvertedIndex invertedIndex;
+    private String compressedPostingList;
     private Integer length;
     private Integer prefixSize;
     private Integer termPtr;
     private int currInd;
-    private int k;
     private boolean isKth;
     private String previousTerm, term;
     private String croppedTerm;
-    private String compressedString;
 
     /***********GETTERS AND SETTERS**************/
     public String getCroppedTerm() {
         return croppedTerm;
     }
 
-    public String getCompressedString() {
-        return compressedString;
-    }
 
     public int getFreq() {
         return freq;
@@ -35,6 +33,10 @@ public class FCRow {
     public Integer getPrefixSize() {
         return prefixSize;
     }
+
+    public String getCompressedPostingList() {
+        return compressedPostingList;
+    }
     /*************************/
 
 
@@ -44,16 +46,14 @@ public class FCRow {
      * @param term         complete string of current term
      * @param previousTerm complete string of previous term
      */
-    public FCRow(int ind, boolean isKth, int k, String term, TermsObject termsObject, String previousTerm, int termPtr) {
+    public FCRow(int ind, boolean isKth, String term, PostingList postingList, String previousTerm, int termPtr) {
         this.currInd = ind;
         this.isKth = isKth;
         this.term = term;
-        this.k = k;
         this.previousTerm = previousTerm;
-        this.freq = termsObject.getFreq();
+        this.freq = postingList.getFreq();
         this.termPtr = termPtr;
-        this.invertedIndex = new InvertedIndex(termsObject.getPostingList(), termsObject.getInKReviews());
-        this.compressedString = invertedIndex.create();
+        this.compressedPostingList = postingList.getCompressedPostingListWithFrequencies();
         create();
     }
 

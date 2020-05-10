@@ -1,5 +1,8 @@
 package webdata;
 
+import webdata.WriteToDisk.FeaturesDict;
+import webdata.WriteToDisk.TotalCounts;
+
 import java.io.*;
 import java.util.*;
 
@@ -16,7 +19,7 @@ public class PreProcessor {
     private ArrayList<String> terms;
     private BufferedReader reader;
     private File dataFile;
-    private Map<String, TermsObject> tokensDict;
+    private Map<String, PostingList> tokensDict;
 
     private FeaturesDict featuresDict;
     private TotalCounts totalCounts;
@@ -25,7 +28,7 @@ public class PreProcessor {
     public FeaturesDict getFeaturesDict() {
         return featuresDict;
     }
-    public Map<String, TermsObject> getTokensDict() {
+    public Map<String, PostingList> getTokensDict() {
         return tokensDict;
     }
 
@@ -73,10 +76,10 @@ public class PreProcessor {
     }
 
     /**
-     * function to update Map<String, TermsObject> tokensDict
-     * example of an element: <term: TermObject>
+     * function to update Map<String, PostingList> tokensDict
+     * example of an element: <term: PostingList>
      * So for each token in tokens
-     * First - create TermObject
+     * First - create PostingList
      * Second - update tokensDict dictionary
      * <p>
      * note that this function iterates over the text twice - bad effect on runtime!!
@@ -92,7 +95,7 @@ public class PreProcessor {
         ArrayList<String> lineTokens = new ArrayList<>(getText(line));
         Map<String, Integer> tokensCount = new HashMap<>();
 
-
+//        count number of occurences in review for each token
         for (String token : lineTokens) {
             Integer count = tokensCount.getOrDefault(token, 0);
             tokensCount.put(token, count + 1);
@@ -103,9 +106,9 @@ public class PreProcessor {
             if (token.equals("")) {
                 continue;
             }
-            TermsObject termsObject = tokensDict.getOrDefault(token, new TermsObject());
-            termsObject.update(entry.getValue(), reviewID);
-            tokensDict.put(token, termsObject);
+            PostingList postingList = tokensDict.getOrDefault(token, new PostingList());
+            postingList.update(entry.getValue(), reviewID);
+            tokensDict.put(token, postingList);
         }
 
         return lineTokens.size();
